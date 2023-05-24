@@ -1,0 +1,32 @@
+--Get all Data
+
+CREATE PROCEDURE [dbo].[use_Get_StudentDetails]
+AS
+BEGIN
+	SELECT ID, FirstName, LastName, Number FROM DBO.tbl_StudentDetails WITH (NOLOCK)
+END
+
+--Insert
+CREATE PROCEDURE [dbo].[use_Insert_Student]
+(
+	@FirstName		VARCHAR(50)
+	,@LastName		VARCHAR(50)
+	,@Number		FLOAT
+)
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRAN
+			INSERT INTO DBO.tbl_StudentDetails(FirstName, LastName, Number) 
+				VALUES
+					(
+						@FirstName		
+						,@LastName		
+						,@Number	
+					)
+		COMMIT TRAN
+	END TRY
+		BEGIN CATCH
+			ROLLBACK TRAN
+		END CATCH
+END
